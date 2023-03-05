@@ -10,12 +10,12 @@ import java.util.List;
 
 @Data
 @Entity
-@NamedQuery(name="Supplier.findAll", query="SELECT s FROM Supplier s")
+
 public class Supplier implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int supplierId;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -36,7 +36,7 @@ public class Supplier implements Serializable {
 
     private BigDecimal version;
 
-    //bi-directional many-to-one association to Stock
+
     @OneToMany(mappedBy="supplier")
     private List<Stock> stocks;
 

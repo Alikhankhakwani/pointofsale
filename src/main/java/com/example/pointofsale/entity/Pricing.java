@@ -9,37 +9,37 @@ import java.util.Date;
 import java.util.List;
 @Data
 @Entity
-@NamedQuery(name="Pricing.findAll", query="SELECT p FROM Pricing p")
+
 public class Pricing implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column
     private int pricingId;
-
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDateTime;
-
+    @Column
     private String createdUser;
-
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDateTime;
-
+    @Column
     private String lastModifiedUser;
 
-    private BigDecimal pricingDiscountPrecentage;
-
+    @Column
     @Temporal(TemporalType.DATE)
     private Date pricingEffectiveDate;
-
+    @Column
     @Temporal(TemporalType.DATE)
     private Date pricingExpireDate;
-
+    @Column
     private String pricingName;
-
+    @Column
     private BigDecimal version;
 
-    //bi-directional many-to-one association to ProductPricing
+
     @OneToMany(mappedBy="pricing")
     private List<ProductPricing> productPricings;
 

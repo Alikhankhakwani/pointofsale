@@ -10,48 +10,49 @@ import java.util.List;
 
 @Data
 @Entity
-@NamedQuery(name="Product.findAll", query="SELECT p FROM Product p")
+
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column
     private int productId;
-
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDateTime;
-
+    @Column
     private String createdUser;
-
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDateTime;
-
+    @Column
     private String lastModifiedUser;
-
+    @Column
     private double productbuyingPrice;
-
+    @Column
     private byte productIsService;
-
+    @Column
     private String productName;
-
+    @Column
     private double productsellingPrice;
-
+    @Column
     private BigDecimal version;
 
-    //bi-directional many-to-one association to Category
+
     @ManyToOne
     @JoinColumn(name="category_Id")
     private Category category;
 
-    //bi-directional many-to-one association to ProductInvoice
+
     @OneToMany(mappedBy="product")
     private List<ProductInvoice> productInvoices;
 
-    //bi-directional many-to-one association to ProductPricing
+
     @OneToMany(mappedBy="product")
     private List<ProductPricing> productPricings;
 
-    //bi-directional many-to-one association to Stock
+
     @OneToMany(mappedBy="product")
     private List<Stock> stocks;
 }

@@ -9,27 +9,28 @@ import java.util.List;
 
 @Data
 @Entity
-@NamedQuery(name="Invoice.findAll", query="SELECT i FROM Invoice i")
+
 public class Invoice implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "invoice_Id")
     private int invoiceId;
-
+    @Column(name = "lineTotal")
     private double lineTotal;
-
+    @Column(name = "category_Id")
     private int productId;
-
+    @Column(name = "category_Id")
     private String productName;
-
+    @Column(name = "category_Id")
     private double quantity;
-
+    @Column(name = "category_Id")
     private double total;
-
+    @Column(name = "category_Id")
     private BigDecimal version;
 
-    //bi-directional many-to-one association to ProductInvoice
+
     @OneToMany(mappedBy="invoice")
     private List<ProductInvoice> productInvoices;
 

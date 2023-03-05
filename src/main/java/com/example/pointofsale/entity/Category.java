@@ -10,32 +10,33 @@ import java.util.Date;
 import java.util.List;
 @Data
 @Entity
-@NamedQuery(name="Category.findAll", query="SELECT c FROM Category c")
+
 public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "category_Id")
     private int categoryId;
-
+    @Column(name = "category_Name")
     private String categoryName;
-
+    @Column(name = "createdDate_Time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDateTime;
-
+    @Column(name = "created_User")
     private String createdUser;
-
+    @Column(name = "lastModified_DateTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDateTime;
-
+    @Column(name = "lastModified_User")
     private String lastModifiedUser;
-
+    @Column(name = "version")
     private BigDecimal version;
-    //bi-directional many-to-one association to Product
+
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 
-    //bi-directional many-to-one association to Stock
+
     @OneToMany(mappedBy = "category")
     private List<Stock> stocks;
 }

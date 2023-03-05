@@ -9,13 +9,13 @@ import java.math.BigDecimal;
 import java.util.Date;
 @Data
 @Entity
-@NamedQuery(name="Stock.findAll", query="SELECT s FROM Stock s")
+
 public class Stock implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int refId;
 
     private String branchId;
@@ -39,17 +39,17 @@ public class Stock implements Serializable {
 
     private BigDecimal version;
 
-    //bi-directional many-to-one association to Product
+
     @ManyToOne
     @JoinColumn(name="product_Id")
     private Product product;
 
-    //bi-directional many-to-one association to Supplier
+
     @ManyToOne
     @JoinColumn(name="supplier_Id")
     private Supplier supplier;
 
-    //bi-directional many-to-one association to Category
+
     @ManyToOne
     @JoinColumn(name="category_Id")
     private Category category;
