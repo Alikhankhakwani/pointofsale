@@ -24,7 +24,7 @@ public class SupplierController {
     @GetMapping("/Supplier/{id}" )
     public List<SupplierModel> getSupplier(@PathVariable("id") Long Id)
     {
-        return supplierService.getSuppliers(Id,null);
+        return supplierService.getSuppliers(Id);
     }
     @PostMapping("/saveSupplier")
     public String addSupplier(@RequestBody SupplierModel supplierModel) {
@@ -33,7 +33,7 @@ public class SupplierController {
     }
 
 
-    @DeleteMapping("/deleteStock/{id}")
+    @DeleteMapping("/deleteSupplier/{id}")
     public String delete(@PathVariable("id") Long Id) {
         supplierService.deleteSupplier(Id);
         return "Supplier Deleted Successfully ";

@@ -18,7 +18,9 @@ public class CategoryModel {
 
     private String categoryName;
 
-    public CategoryModel(Object categoryModel) {
+    public CategoryModel(Category category) {
+        this.categoryId=getCategoryId();
+        this.categoryName=getCategoryName();
     }
 
     public Category disassemble() {

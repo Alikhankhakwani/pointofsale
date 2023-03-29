@@ -11,16 +11,26 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include. NON_NULL)
 public class InvoiceModel {
-    private long invoiceId;
+    private long Id;
     private String categoryName;
 
     private long productId;
     private String productName;
     private double quantity;
     private double total;
+
+    public InvoiceModel(Invoice invoice) {
+        this.Id=getId();
+        this.categoryName=getCategoryName();
+        this.productId=getProductId();
+        this.productName=getProductName();
+        this.quantity=getQuantity();
+        this.total=getTotal();
+    }
+
     public Invoice disassemble(){
         Invoice invoice=new Invoice();
-        invoice.setInvoiceId(invoiceId);
+        invoice.setId(Id);
         invoice.setCategoryName(categoryName);
         invoice.setProductId(productId);
         invoice.setProductName(productName);
@@ -31,7 +41,7 @@ public class InvoiceModel {
     }
     public InvoiceModel assemble(Invoice invoice){
         InvoiceModel invoiceModel=new InvoiceModel();
-        invoiceModel.setInvoiceId(invoice.getInvoiceId());
+        invoiceModel.setId(invoice.getId());
         invoiceModel.setCategoryName(invoice.getCategoryName());
         invoiceModel.setProductId(invoice.getProductId());
         invoiceModel.setProductName(invoice.getProductName());

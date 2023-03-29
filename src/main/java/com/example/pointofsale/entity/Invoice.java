@@ -19,7 +19,7 @@ public class Invoice implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "invoice_Id")
-    private long invoiceId;
+    private long Id;
     @Column(name = "category_Name")
     private String categoryName;
     @Column(name = "product_id")

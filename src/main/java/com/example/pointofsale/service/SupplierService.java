@@ -53,7 +53,7 @@ public class SupplierService {
 
 
 
-    public List<SupplierModel> getSuppliers(Long Id, String supplierName) {
+    public List<SupplierModel> getSuppliers(Long Id) {
         List<SupplierModel> supplies = new ArrayList<>();
         if (Id != null) {
             supplies = List.of(supplierRepository.findAll()
