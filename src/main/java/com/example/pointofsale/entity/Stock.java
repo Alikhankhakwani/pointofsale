@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 @Data
 @Entity
@@ -21,12 +22,12 @@ public class Stock implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "Id")
-    private long id;
+    private Long id;
 
 
-    @Column(name = "date_Stock")
+    @Column(name = "date")
     @Temporal(TemporalType.DATE)
-    private Date dateStock;
+    private LocalDate date;
 
     @Column(name = "quantity")
     private Long quantity;

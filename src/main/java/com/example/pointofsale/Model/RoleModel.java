@@ -7,37 +7,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include. NON_NULL)
+@AllArgsConstructor
 public class RoleModel {
-
     private Long id;
-
     private String roleName;
 
     public RoleModel(Role role) {
-        this.id = id;
-        this.roleName = roleName;
+        this.id = role.getId();
+        this.roleName = role.getRoleName();
     }
 
-    public Role disassemble() {
-        Role role = new  Role();
+    public Role toEntity() {
+        Role role = new Role();
         role.setId(id);
         role.setRoleName(roleName);
-
         return role;
-
-    }
-
-    public RoleModel assemble(Role role) {
-        RoleModel roleModel = new RoleModel();
-
-
-        roleModel.setId(role.getId());
-        roleModel.setRoleName(role.getRoleName());
-
-        return roleModel;
-
     }
 }
+

@@ -7,48 +7,32 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@JsonInclude(JsonInclude.Include. NON_NULL)
-public class UserModel {
-    private Long Id;
-    private String username;
-    private String password;
+import java.util.List;
+import java.util.stream.Collectors;
 
-    private boolean status;
-    private long roleid;
-    private RoleModel roleModel;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserModel {
+    private Long id;
+    private String username;
+    private List<RoleModel> roles;
 
     public UserModel(User user) {
-
-        this.Id=getId();
-        this.username=getUsername();
-       this.password=getPassword();
-        this.roleModel = new RoleModel((Role) user.getRole());
-
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.roles = user.getRoles().stream()
+                .map(RoleModel::new)
+                .collect(Collectors.toList());
     }
-    // Convert model to entity
-    public User disassemble() {
+
+    public User toEntity() {
         User user = new User();
-        RoleModel newRoleModel = new RoleModel();
-        user.setId(Id);
+        user.setId(id);
         user.setUsername(username);
-        user.setPassword(password);
-
+        user.setRoles(roles.stream()
+                .map(RoleModel::toEntity)
+                .collect(Collectors.toList()));
         return user;
-    }
-    // Convert entity to model
-    public UserModel assemble(User user) {
-        UserModel userModel = new UserModel();
-        RoleModel newRoleModel1 = new RoleModel();
-
-        userModel.setId(user.getId());
-        userModel.setUsername(user.getUsername());
-        userModel.setPassword(user.getPassword());
-
-        userModel.setRoleModel(roleModel.assemble((Role) user.getRole()));
-        return userModel;
-
     }
 }
