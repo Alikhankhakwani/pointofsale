@@ -1,28 +1,31 @@
 package com.example.pointofsale.controller;
 
-
-import com.example.pointofsale.Model.UserLoginModel;
 import com.example.pointofsale.Model.UserModel;
-import com.example.pointofsale.service.implementation.UserService1;
+import com.example.pointofsale.entity.User;
+import com.example.pointofsale.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user")
-public class UserController
-{
+@RequestMapping("/api")
+public class UserController {
+
     @Autowired
-    public UserService1 userService1;
+    private UserService userService;
 
-    @PostMapping(path = "signup")
-    public String signup(@RequestBody UserModel userModel)
-    {
-      return userService1.saveuser(userModel);
-    }
-    @GetMapping(path = "login")
-    public String login(@RequestBody UserLoginModel userLoginModel)
-    {
+    @PostMapping("/login")
+    public ResponseEntity<UserModel> login(@RequestBody UserModel userModel) {
 
-        return userService1.isUserExist(userLoginModel);
+        // Get the user from the database using the username
+        User user = userService.findByUsername(userModel.getUsername());
+
+
+        // Return the token to the client
+        return ResponseEntity.ok(userModel);
     }
 }
+
