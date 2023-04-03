@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Data
 @AllArgsConstructor
@@ -14,32 +13,25 @@ import org.springframework.stereotype.Component;
 public class CategoryModel {
 
 
-    private long categoryId;
+    private Long id;
 
-    private String categoryName;
+    private String Name;
 
-    public CategoryModel(Category category) {
-        this.categoryId=getCategoryId();
-        this.categoryName=getCategoryName();
-    }
 
     public Category disassemble() {
-        Category category = new Category();
+        Category category = new Category(id);
+        category.setId(id);
+        category.setName(Name);
 
-        category.setCategoryId(categoryId);
-        category.setCategoryName(categoryName);
+
+
         return category;
     }
+    public CategoryModel assemble(Category Category){
+        CategoryModel categoryModel=new CategoryModel();
+        categoryModel.setId(Category.getId());
+        categoryModel.setName(Category.getName());
 
-
-        public CategoryModel assemble (Category category){
-            CategoryModel categoryModel = new CategoryModel();
-
-            categoryModel.setCategoryId(category.getCategoryId());
-            categoryModel.setCategoryName(category.getCategoryName());
-
-            return categoryModel;
-
-
-        }
+        return categoryModel;
+    }
     }

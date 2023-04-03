@@ -19,14 +19,14 @@ public class Supplier implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "stock_Id")
-    private long Id;
-    @Column(name = "supplier_Name")
-    private String supplierName;
-    @Column(name = "supplier_Company")
-    private String supplierCompany;
-    @Column(name = "supplier_Contact")
-    private BigDecimal supplierContact;
+    @Column(name = "Id")
+    private Long id;
+    @Column(name = "Name")
+    private String name;
+    @Column(name = "Company")
+    private String company;
+    @Column(name = "Contact")
+    private BigDecimal contact;
 
 
 

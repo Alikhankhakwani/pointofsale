@@ -20,8 +20,8 @@ public class Stock implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "stock_Id")
-    private long Id;
+    @Column(name = "Id")
+    private long id;
 
 
     @Column(name = "date_Stock")
@@ -29,19 +29,19 @@ public class Stock implements Serializable {
     private Date dateStock;
 
     @Column(name = "quantity")
-    private long quantity;
+    private Long quantity;
 
     //private int stockId;
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name="category_Id")
     private Category category;
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name="product_Id")
     private Product product;
 
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name="supplier_Id")
     private Supplier supplier;

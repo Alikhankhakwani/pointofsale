@@ -12,27 +12,33 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include. NON_NULL)
 public class UserModel {
-    private Long id;
+    private Long Id;
     private String username;
     private String password;
+
+    private boolean status;
+    private long roleid;
     private RoleModel roleModel;
 
     public UserModel(User user) {
-        this.id= user.getId();
-        this.username = user.getUsername();
-        this.password = user.getPassword();
-        this.roleModel=new RoleModel((Role) user.getRoles());
-    }
 
+        this.Id=getId();
+        this.username=getUsername();
+       this.password=getPassword();
+        this.roleModel = new RoleModel((Role) user.getRole());
+
+    }
+    // Convert model to entity
     public User disassemble() {
         User user = new User();
         RoleModel newRoleModel = new RoleModel();
-        user.setId(id);
+        user.setId(Id);
         user.setUsername(username);
         user.setPassword(password);
-        user.setRoles(RoleModel.disassemble());
+
         return user;
     }
+    // Convert entity to model
     public UserModel assemble(User user) {
         UserModel userModel = new UserModel();
         RoleModel newRoleModel1 = new RoleModel();
@@ -41,7 +47,7 @@ public class UserModel {
         userModel.setUsername(user.getUsername());
         userModel.setPassword(user.getPassword());
 
-        userModel.setRoleModel(roleModel.assemble(user.g));
+        userModel.setRoleModel(roleModel.assemble((Role) user.getRole()));
         return userModel;
 
     }

@@ -1,73 +1,57 @@
 package com.example.pointofsale.service;
 
 import com.example.pointofsale.Model.InvoiceModel;
-import com.example.pointofsale.Model.SupplierModel;
+//import com.example.pointofsale.Model.SupplierModel;
 import com.example.pointofsale.entity.Invoice;
 import com.example.pointofsale.entity.Supplier;
 import com.example.pointofsale.repo.InvoiceRepository;
+import com.example.pointofsale.repo.ProductInvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class InvoiceService {
-    @Autowired
-    public InvoiceRepository invoiceRepository;
+@Autowired
+    private final InvoiceRepository invoiceRepository;
 
-    public String save(InvoiceModel invoiceModel) {
-        if (!invoiceRepository.existsById(invoiceModel.getId())) {
-            invoiceModel.assemble(invoiceRepository.save(invoiceModel.disassemble()));
-            return "Invoice Saved Successfully ";
-        }
-
-        else
-
-        {
-            return "Invoice Already Exists";
-        }
+    public InvoiceService(InvoiceRepository invoiceRepository) {
+        this.invoiceRepository = invoiceRepository;
     }
 
-
-
-    public String deleteInvoice(Long id ) {
-        invoiceRepository.deleteById(id);
-        return "Supplier Deleted Successfully ";
+    public InvoiceModel save(InvoiceModel invoiceModel) {
+        Invoice invoice = invoiceModel.disassemble();
+        Invoice savedInvoice = invoiceRepository.save(invoice);
+        return new InvoiceModel().assemble(savedInvoice);
     }
 
-    public List<InvoiceModel> findInvoice() {
+    public InvoiceModel findById(Long id) {
+        Invoice invoice = invoiceRepository.findById(id).orElse(null);
+        if (invoice == null) {
+            return null;
+        }
+        return new InvoiceModel().assemble(invoice);
+    }
 
-        List<InvoiceModel> invoiceModels = new ArrayList<>();
+    public List<InvoiceModel> findAll() {
         List<Invoice> invoices = invoiceRepository.findAll();
+        List<InvoiceModel> invoiceModels = new ArrayList<>();
         for (Invoice invoice : invoices) {
-            InvoiceModel invoiceModel = new InvoiceModel(invoice);
-            invoiceModels.add(invoiceModel);
-
+            invoiceModels.add(new InvoiceModel().assemble(invoice));
         }
         return invoiceModels;
     }
 
-
-
-    public List<InvoiceModel> getInvoice(Long Id) {
-        List<InvoiceModel> invoices = new ArrayList<>();
-        if (Id != null) {
-            invoices = List.of(invoiceRepository.findAll()
-                    .stream()
-                    .map(InvoiceModel::new)
-                    .filter(invoiceModel -> invoiceModel.getId() == (Id))
-                    .findFirst()
-                    .get());
-
-        }
-        else {
-            invoices = invoiceRepository.findAll()
-                    .stream()
-                    .map(InvoiceModel::new)
-                    .collect(Collectors.toList());
-        }
-        return invoices;
+    public void deleteById(Long id) {
+        invoiceRepository.deleteById(id);
     }
+
 }
+
+
+
+

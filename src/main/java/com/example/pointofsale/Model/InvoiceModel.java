@@ -1,53 +1,50 @@
 package com.example.pointofsale.Model;
 
 import com.example.pointofsale.entity.Invoice;
+import com.example.pointofsale.entity.ProductInvoice;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-@JsonInclude(JsonInclude.Include. NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class InvoiceModel {
-    private long Id;
-    private String categoryName;
 
-    private long productId;
-    private String productName;
-    private double quantity;
-    private double total;
+    private Long id;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate date;
 
-    public InvoiceModel(Invoice invoice) {
-        this.Id=getId();
-        this.categoryName=getCategoryName();
-        this.productId=getProductId();
-        this.productName=getProductName();
-        this.quantity=getQuantity();
-        this.total=getTotal();
+    public InvoiceModel(Invoice invoice){
+        this.setId(invoice.getId());
+        this.setDate(invoice.getDate());
     }
 
-    public Invoice disassemble(){
-        Invoice invoice=new Invoice();
-        invoice.setId(Id);
-        invoice.setCategoryName(categoryName);
-        invoice.setProductId(productId);
-        invoice.setProductName(productName);
-        invoice.setQuantity(quantity);
-        invoice.setTotal(total);
+    public InvoiceModel() {
+        this.id=getId();
+        this.date=getDate();
+
+    }
+
+    public Invoice disassemble() {
+        Invoice invoice = new Invoice();
+        invoice.setId(id);
+        invoice.setDate(date);
         return invoice;
-
     }
-    public InvoiceModel assemble(Invoice invoice){
-        InvoiceModel invoiceModel=new InvoiceModel();
+    public InvoiceModel assemble(Invoice invoice) {
+        InvoiceModel invoiceModel = new InvoiceModel(invoice);
         invoiceModel.setId(invoice.getId());
-        invoiceModel.setCategoryName(invoice.getCategoryName());
-        invoiceModel.setProductId(invoice.getProductId());
-        invoiceModel.setProductName(invoice.getProductName());
-        invoiceModel.setQuantity(invoice.getQuantity());
-        invoiceModel.setTotal(invoice.getTotal());
-
+        invoiceModel.setDate(invoice.getDate());
         return invoiceModel;
     }
+
 }
+

@@ -22,30 +22,26 @@ public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "product_Id")
-    private long productId;
-    @Column(name = "product_Name")
-    private String productName;
+    private Long id;
+    @Column
+    private String name;
 
-    @Column(name = "product_BuyingPrice")
-    private double productBuyingPrice;
+   @Column
+    private double Price;
 
-    @Column(name = "product_SellingPrice")
-    private double productSellingPrice;
 
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="category_Id")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
     private Category category;
 
-    @JsonIgnore
-    @OneToMany(mappedBy="product")
-    private List<ProductInvoice> productInvoices;
-    @JsonIgnore
-    @OneToMany(mappedBy="product")
-    private List<ProductPricing> productPricing;
 
-    @JsonIgnore
+
+    @ManyToOne
+    @JoinColumn(name="invoice_Id")
+    private Invoice Invoice;
+
+
     @OneToMany(mappedBy="product")
     private List<Stock> stocks;
 

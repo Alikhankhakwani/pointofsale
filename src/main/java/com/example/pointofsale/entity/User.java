@@ -24,5 +24,5 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
+    private List<Role> role;
 }

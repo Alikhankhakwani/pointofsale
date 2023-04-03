@@ -13,11 +13,11 @@ import java.util.List;
 @Entity
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
     @Column
-    private String role;
+    private String roleName;
     @ManyToMany(mappedBy = "role", fetch = FetchType.LAZY)
-    private List<User> users;
+    private List<User> user;
 }

@@ -21,16 +21,20 @@ public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
-    private long categoryId;
-;
+    @Column(name = "id")
+    private Long id;
+
     @Column(name = "category_Name")
-    private String categoryName;
+    private String name;
+
+//    @OneToMany(mappedBy = "category")
+//    private List<Invoice> invoice;
     @OneToMany(mappedBy = "category")
-    private List<Product> products;
+    private List<Product> product;
     @OneToMany(mappedBy="category")
     private List<Stock> stocks;
 
 
-
+    public Category(Long id) {
+    }
 }

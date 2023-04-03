@@ -1,37 +1,38 @@
 package com.example.pointofsale.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
-import java.io.Serial;
-import java.io.Serializable;
-@Data
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.List;
+
 @Entity
-@Table(name="product_invoice")
-@AllArgsConstructor
+@Table(name = "product_invoices")
+@Data
 @NoArgsConstructor
-
-public class ProductInvoice implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
-
+@AllArgsConstructor
+public class ProductInvoice {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private int Id;
+    private Long id;
 
- @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="invoices_id")
+    @Column(name = "Total")
+    private BigDecimal Total;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "invoice_id")
     private Invoice invoice;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="products_id")
-    private Product product;
+
 
 
 }
+

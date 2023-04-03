@@ -3,43 +3,53 @@ package com.example.pointofsale.controller;
 import com.example.pointofsale.Model.ProductModel;
 import com.example.pointofsale.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
-    public class ProductController {
+@RequestMapping("/products")
+public class ProductController {
+
     @Autowired
-    public ProductService productService;
+    private ProductService productService;
 
-
-    @GetMapping(path = "/listProduct" )
-    public List<ProductModel> getProducts()
-    {
-        return productService.findProduct();
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductModel> getProductById(@PathVariable Long id) {
+        ProductModel productModel = productService.getProductById(id);
+        return ResponseEntity.ok().body(productModel);
     }
 
-    @GetMapping("/product/{id}" )
-    public List<ProductModel> getProducts(@PathVariable("id") Long productId)
-    {
-        return productService.getProducts(productId,null);
-    }
-    @PostMapping("/saveProduct")
-    public String addProduct(@RequestBody ProductModel productModel) {
-       return   productService.save(productModel);
-
+    @GetMapping
+    public ResponseEntity<List<ProductModel>> getAllProducts() {
+        List<ProductModel> productModelList = productService.getAllProducts();
+        return ResponseEntity.ok().body(productModelList);
     }
 
-
-    @DeleteMapping("/deleteProduct/{id}")
-    public String delete(@PathVariable("id") Long productId) {
-        productService.deleteProduct(productId);
-        return "Product Deleted Successfully ";
+    @PostMapping
+    public ResponseEntity<ProductModel> createProduct(@RequestBody ProductModel productModel) {
+        ProductModel createdProductModel = productService.createProduct(productModel);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(createdProductModel.getId()).toUri();
+        return ResponseEntity.created(location).body(createdProductModel);
     }
 
-
-
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductModel> updateProduct(@PathVariable Long id, @RequestBody ProductModel productModel) {
+        ProductModel updatedProductModel = productService.updateProduct(id, productModel);
+        return ResponseEntity.ok().body(updatedProductModel);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
+    }
+}
+
 
 
 

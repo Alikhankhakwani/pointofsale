@@ -14,17 +14,17 @@ public class RoleModel {
 
     private Long id;
 
-    private String role;
+    private String roleName;
 
     public RoleModel(Role role) {
-        this.id = getId();
-        this.role = getRole();
+        this.id = id;
+        this.roleName = roleName;
     }
-    public static Role disassemble() {
-        Role role = new  Role();
 
+    public Role disassemble() {
+        Role role = new  Role();
         role.setId(id);
-        role.setRole(String.valueOf(role));
+        role.setRoleName(roleName);
 
         return role;
 
@@ -35,7 +35,7 @@ public class RoleModel {
 
 
         roleModel.setId(role.getId());
-        roleModel.setRole(role.setRole());
+        roleModel.setRoleName(role.getRoleName());
 
         return roleModel;
 
