@@ -20,34 +20,44 @@ public class SupplierService {
     @Autowired
     private SupplierRepository supplierRepository;
 
-    public SupplierModel createSupplier(SupplierModel supplierModel) {
-        Supplier supplier = supplierModel.disassemble();
-        supplier = supplierRepository.save(supplier);
-        return new SupplierModel(supplier);
+    public List<SupplierModel> getAllSuppliers() {
+        List<Supplier> suppliers = supplierRepository.findAll();
+        return suppliers.stream()
+                .map(this::mapToModel)
+                .collect(Collectors.toList());
     }
 
     public SupplierModel getSupplierById(Long id) {
-        Optional<Supplier> supplierOptional = supplierRepository.findById(id);
-        if (supplierOptional.isPresent()) {
-            return new SupplierModel(supplierOptional.get());
-        } else {
-            throw new RuntimeException("Supplier not found with id: " + id);
-        }
+        Supplier supplier = supplierRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Supplier not found with id " + id));
+        return mapToModel(supplier);
     }
 
-    public SupplierModel updateSupplier(SupplierModel supplierModel) {
+    public SupplierModel createSupplier(SupplierModel supplierModel) {
         Supplier supplier = supplierModel.disassemble();
-        supplier = supplierRepository.save(supplier);
-        return new SupplierModel(supplier);
+        Supplier savedSupplier = supplierRepository.save(supplier);
+        return mapToModel(savedSupplier);
     }
 
-    public void deleteSupplierById(Long id) {
+    public SupplierModel updateSupplier(Long id, SupplierModel supplierModel) {
+        Supplier existingSupplier = supplierRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Supplier not found with id " + id));
+        Supplier updatedSupplier = supplierModel.disassemble();
+        updatedSupplier.setId(existingSupplier.getId());
+        Supplier savedSupplier = supplierRepository.save(updatedSupplier);
+        return mapToModel(savedSupplier);
+    }
+
+    public void deleteSupplier(Long id) {
         supplierRepository.deleteById(id);
     }
 
-    public List<SupplierModel> getAllSuppliers() {
-        List<Supplier> suppliers = supplierRepository.findAll();
-        return suppliers.stream().map(SupplierModel::new).collect(Collectors.toList());
+    private SupplierModel mapToModel(Supplier supplier) {
+        return new SupplierModel(
+                supplier.getId(),
+                supplier.getName(),
+                supplier.getCompany(),
+                supplier.getContact()
+        );
     }
 }
-

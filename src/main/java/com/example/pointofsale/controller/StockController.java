@@ -18,7 +18,7 @@ public class StockController {
     @Autowired
     private StockService stockService;
 
-    @GetMapping("/")
+    @GetMapping
     public List<StockModel> getAllStocks() {
         return stockService.getAllStocks();
     }
@@ -33,7 +33,7 @@ public class StockController {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<StockModel> createStock(@RequestBody StockModel stockModel) {
         StockModel createdStock = stockService.createStock(stockModel);
         if (createdStock != null) {

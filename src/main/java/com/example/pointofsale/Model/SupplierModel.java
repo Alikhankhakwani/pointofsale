@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 @Data
-@AllArgsConstructor
+
 
 public class SupplierModel {
     private Long id;
@@ -18,14 +18,19 @@ public class SupplierModel {
     private BigDecimal contact;
 
 
-    public SupplierModel(Supplier supplier) {
-       this.setId(getId());
-       this.setName(getName());
-       this.setCompany(getCompany());
-       this.setContact(getContact());
-
-    }
-
+//    public SupplierModel(Supplier supplier) {
+//       this.setId(getId());
+//       this.setName(getName());
+//       this.setCompany(getCompany());
+//       this.setContact(getContact());
+//
+//    }
+public SupplierModel(Long id, String name, String company, BigDecimal contact){
+        this.setId(id);
+        this.setName(name);
+        this.setCompany(company);
+        this.setContact(contact);
+}
     public SupplierModel(){
         this.id=getId();
         this.name=getName();
@@ -45,10 +50,10 @@ public class SupplierModel {
 
     public SupplierModel assemble (Supplier supplier){
         SupplierModel supplierModel = new SupplierModel();
-        supplierModel.setId(supplierModel.getId());
-        supplierModel.setName(supplierModel.getName());
-        supplierModel.setCompany(supplierModel.getCompany());
-        supplierModel.setContact(supplierModel.getContact());
+        supplierModel.setId(supplier.getId());
+        supplierModel.setName(supplier.getName());
+        supplierModel.setCompany(supplier.getCompany());
+        supplierModel.setContact(supplier.getContact());
         return supplierModel;
 
 

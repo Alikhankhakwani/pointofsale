@@ -27,9 +27,9 @@ public class StockModel {
             this.setId(stock.getId());
             this.setDate(stock.getDate());
             this.setQuantity(stock.getQuantity());
-            this.categoryModel=new CategoryModel();
-            this.productModel=new ProductModel();
-            this.supplierModel=new SupplierModel();
+//            this.categoryModel=new CategoryModel();
+//            this.productModel=new ProductModel();
+//            this.supplierModel=new SupplierModel();
             this.setCategoryModel(new CategoryModel().assemble(stock.getCategory()));
             this.setProductModel(new ProductModel().assemble(stock.getProduct()));
             this.setSupplierModel(new SupplierModel().assemble(stock.getSupplier()));

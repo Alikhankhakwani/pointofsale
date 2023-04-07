@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -18,10 +20,10 @@ public class SupplierController {
     @Autowired
     private SupplierService supplierService;
 
-    @PostMapping
-    public ResponseEntity<SupplierModel> createSupplier(@RequestBody SupplierModel supplierModel) {
-        SupplierModel createdSupplier = supplierService.createSupplier(supplierModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdSupplier);
+    @GetMapping
+    public ResponseEntity<List<SupplierModel>> getAllSuppliers() {
+        List<SupplierModel> suppliers = supplierService.getAllSuppliers();
+        return ResponseEntity.ok(suppliers);
     }
 
     @GetMapping("/{id}")
@@ -30,25 +32,26 @@ public class SupplierController {
         return ResponseEntity.ok(supplier);
     }
 
+    @PostMapping
+    public ResponseEntity<SupplierModel> createSupplier(@RequestBody SupplierModel supplierModel) {
+        SupplierModel createdSupplier = supplierService.createSupplier(supplierModel);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(createdSupplier.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(createdSupplier);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<SupplierModel> updateSupplier(@PathVariable Long id, @RequestBody SupplierModel supplierModel) {
-        if (!supplierModel.getId().equals(id)) {
-            throw new RuntimeException("Invalid supplier id: " + supplierModel.getId());
-        }
-        SupplierModel updatedSupplier = supplierService.updateSupplier(supplierModel);
+        SupplierModel updatedSupplier = supplierService.updateSupplier(id, supplierModel);
         return ResponseEntity.ok(updatedSupplier);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSupplierById(@PathVariable Long id) {
-        supplierService.deleteSupplierById(id);
+    public ResponseEntity<Void> deleteSupplier(@PathVariable Long id) {
+        supplierService.deleteSupplier(id);
         return ResponseEntity.noContent().build();
     }
-
-    @GetMapping
-    public ResponseEntity<List<SupplierModel>> getAllSuppliers() {
-        List<SupplierModel> suppliers = supplierService.getAllSuppliers();
-        return ResponseEntity.ok(suppliers);
-    }
 }
-
