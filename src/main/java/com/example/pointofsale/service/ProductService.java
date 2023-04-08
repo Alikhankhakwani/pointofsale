@@ -8,6 +8,8 @@ import com.example.pointofsale.entity.Product;
 import com.example.pointofsale.repo.CategoryRepository;
 import com.example.pointofsale.repo.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +24,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
 
-    @Autowired
+    @NonNull
     private ProductRepository productRepository;
 
-    @Autowired
+    @NonNull
     private CategoryRepository categoryRepository;
 
     public ProductModel getProductById(Long id) {

@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include. NON_NULL)
 public class Product implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3031606634766295224L;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

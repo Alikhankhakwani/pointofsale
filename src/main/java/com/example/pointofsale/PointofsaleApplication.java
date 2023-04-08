@@ -5,11 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.example.pointofsale.controller"})
-@ComponentScan(basePackages = {"com.example.pointofsale.service"})
-@ComponentScan(basePackages = {"com.example.pointofsale.repo"})
-@ComponentScan(basePackages = {"com.example.pointofsale.Model"})
-@ComponentScan(basePackages = {"com.example.pointofsale.config"})
+//@ComponentScan(basePackages = {"com.example.pointofsale.controller"})
+//@ComponentScan(basePackages = {"com.example.pointofsale.service"})
+//@ComponentScan(basePackages = {"com.example.pointofsale.repo"})
+//@ComponentScan(basePackages = {"com.example.pointofsale.Model"})
+
 public class PointofsaleApplication {
 
 	public static void main(String[] args) {
